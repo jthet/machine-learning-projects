@@ -1,6 +1,7 @@
 # Machine Learning Projects
 Project repository for COE 379L: Software Design For Responsible Intelligent Systems
-https://coe-379l-sp24.readthedocs.io/en/latest/index.html
+
+[Class Notes](https://coe-379l-sp24.readthedocs.io/en/latest/index.html)
 
 Spring 2024, UT Austin
 
