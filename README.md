@@ -1,5 +1,7 @@
 # Machine Learning Projects
 Project repository for COE 379L: Software Design For Responsible Intelligent Systems
+https://coe-379l-sp24.readthedocs.io/en/latest/index.html
+
 Spring 2024, UT Austin
 
 ## Project 1: [Fuel Efficiency Prediction (Linear Regression)](https://github.com/jthet/machine-learning-projects/tree/main/linear-regression-ML)
