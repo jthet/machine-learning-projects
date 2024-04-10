@@ -31,6 +31,24 @@ def model_info():
        "non-trainable parameters:": str(sum([np.prod(v.get_shape().as_list()) for v in model.non_trainable_weights])),
    }
 
+
+@app.route('/model/models', methods=['GET'])
+def list_available_models():
+    """
+    Lists the available TensorFlow models that users can switch to.
+    
+    GET: Returns a JSON object listing all available models and indicating the default model.
+
+    Example: curl http://127.0.0.1:5001/model/models
+    """
+    available_models = ["vgg", "resnet", "xception", "ann", "lenet5", "alt_lenet"]
+    return jsonify({
+        "available_models": available_models,
+        "default_model": "alt_lenet",
+        "currently_loaded": model_name,
+        "note": "alt_lenet is the default model loaded in and is the most accurate."
+    })
+
 ###### make it able to accept images as jpegs. 
 
 def preprocess_input(image):
@@ -81,7 +99,7 @@ def predict():
     return {"error": "No file provided"}, 400
 
 
-@app.route('/changeModel', methods=['POST'])
+@app.route('/model/change', methods=['POST'])
 def change_model():
     """
     Changes the TensorFlow model used by the server.
@@ -92,11 +110,15 @@ def change_model():
     Example: curl -X POST -H "Content-Type: application/json" -d '{"model_name": "vgg"}' http://127.0.0.1:5001/changeModel
     """
     global model, model_name, model_path
+    available_models = ["vgg", "resnet", "xception", "ann", "lenet5", "alt_lenet"]
     model_name = request.json.get('model_name')
     if not model_name:
-      return {
-         "error": 
-         "The `model_name` field is required\nYour options are: "}, 400 ### List available models here
+      return { 
+          "error":"The `model_name` field is required", 
+          "available_models": available_models,
+          "default_model": "alt_lenet",
+          "currently_loaded": model_name,
+          "note": "alt_lenet is the default model loaded in and is the most accurate."}, 400 
 
     if os.path.exists(f'models/{model_name}.keras'):
        new_model_path = f'models/{model_name}.keras'
@@ -137,9 +159,42 @@ def model_summary():
     Example: curl http://127.0.0.1:5001/model/summary
     """
     model_summary = model_summary_to_json(model)
-    print(model.summary())
     return jsonify(model_summary)
 
+
+@app.route('/help', methods=['GET'])
+def api_help():
+    """
+    Provides an overview and usage examples for the available API endpoints.
+    """
+    help_info = {
+        "/model/info": {
+            "method": "GET",
+            "description": "Provides basic information about the currently loaded TensorFlow model.",
+            "example": "curl http://127.0.0.1:5001/model/info"
+        },
+        "/model/predict": {
+            "method": "POST",
+            "description": "Classifies an image uploaded by the user as either 'damaged' or 'not damaged'.",
+            "example": "curl -X POST -F 'image=@./data/damage/-93.795_30.03779.jpeg' http://localhost:5001/model/predict"
+        },
+        "/model/change": {
+            "method": "POST",
+            "description": "Changes the TensorFlow model used by the server.",
+            "example": "curl -X POST -H 'Content-Type: application/json' -d '{\"model_name\": \"vgg\"}' http://127.0.0.1:5001/changeModel"
+        },
+        "/model/summary": {
+            "method": "GET",
+            "description": "Provides a textual summary of the currently loaded TensorFlow model's architecture.",
+            "example": "curl http://127.0.0.1:5001/model/summary"
+        },
+        "/model/available": {
+            "method": "GET",
+            "description": "Lists the available TensorFlow models that users can switch to.",
+            "example": "curl http://127.0.0.1:5001/model/available"
+        },
+    }
+    return jsonify(help_info)
 
 # start the development server
 if __name__ == '__main__':
