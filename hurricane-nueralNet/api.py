@@ -181,18 +181,18 @@ def api_help():
         "/model/change": {
             "method": "POST",
             "description": "Changes the TensorFlow model used by the server.",
-            "example": "curl -X POST -H 'Content-Type: application/json' -d '{\"model_name\": \"vgg\"}' http://127.0.0.1:5001/changeModel"
+            "example": "curl -X POST -H 'Content-Type: application/json' -d '{\"model_name\": \"vgg\"}' http://127.0.0.1:5001/model/change"
         },
         "/model/summary": {
             "method": "GET",
             "description": "Provides a textual summary of the currently loaded TensorFlow model's architecture.",
             "example": "curl http://127.0.0.1:5001/model/summary"
         },
-        "/model/available": {
+        "/model/models": {
             "method": "GET",
             "description": "Lists the available TensorFlow models that users can switch to.",
-            "example": "curl http://127.0.0.1:5001/model/available"
-        },
+            "example": "curl http://127.0.0.1:5001/model/models"
+        }
     }
     return jsonify(help_info)
 
