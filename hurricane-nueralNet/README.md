@@ -2,6 +2,41 @@
 
 This repository focuses on classifying satellite images from Texas after Hurricane Harvey into "damaged" and "non-damaged" buildings using TensorFlow nueral networks. We explored various neural network architectures, deploying the best-performing model with a Flask-based inference server. This README covers the deployment and usage of the model inference server.
 
+
+# TensorFlow Model Serving API
+
+## Overview
+
+This API serves as an interface for classifying images using pre-trained TensorFlow models. It allows users to classify images as "damaged" or "not damaged", change the underlying model, and retrieve information about the current model.
+
+## Use
+
+### API Endpoints
+
+| Endpoint            | Method | Description                                                                                         |
+|---------------------|--------|-----------------------------------------------------------------------------------------------------|
+| `/model/info`       | GET    | Provides basic information about the currently loaded TensorFlow model, including its parameters.   |
+| `/model/models`     | GET    | Lists the available TensorFlow models that users can switch to, indicating the default model.      |
+| `/model/predict`    | POST   | Classifies an image uploaded by the user as either "damaged" or "not damaged".                     |
+| `/model/change`     | POST   | Changes the TensorFlow model used by the server to a specified model.                              |
+| `/model/summary`    | GET    | Provides a textual summary of the currently loaded TensorFlow model's architecture.                |
+| `/help`             | GET    | Provides an overview and usage examples for the available API endpoints.                           |
+
+### Starting the Inference Server
+
+To start the inference server with Docker Compose, follow these steps:
+
+1. Open a terminal or command prompt.
+2. Navigate to the directory containing your `docker-compose.yml` file.
+3. Run the following command:
+
+   ```bash
+   docker-compose up --build
+   ```
+This command builds the Docker image (if it hasn't been built) or rebuilds it if the Dockerfile has changed since the last build. Then, it starts the container defined in your docker-compose.yml file.
+
+The server will start, and you can access it at http://localhost:5000 (http://127.0.0.1:5000). If port 5000 is in use locally, change `ports:` to 5001:5000 and just use port 5001.
+
 ## Model Training
 ### Data:
 The data that was used for this project can be found in the `/data` directory of this repository. It contains 21322 (128px, 128px) RGB images. Each image was classified as "damage" or "no_damage". The RGB values were normalized to the range [0, 1] for model training. After that, the data was split for testing and training and several different nueral network architectures were used.
