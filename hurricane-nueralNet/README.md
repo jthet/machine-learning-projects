@@ -222,7 +222,7 @@ Trainable params: 2601153 (9.92 MB)
 Non-trainable params: 0 (0.00 Byte)
 _________________________________________________________________
 ```
-- VGG: A custon model with the VGG-16 architecture as described by [this paper](https://arxiv.org/pdf/1409.1556.pdf)
+- **VGG**: A custon model with the VGG-16 architecture as described by [this paper](https://arxiv.org/pdf/1409.1556.pdf)
 ```
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
@@ -251,7 +251,7 @@ Trainable params: 4363201 (16.64 MB)
 Non-trainable params: 14714688 (56.13 MB)
 _________________________________________________________________
 ```
-- ResNet: A custon model with the ResNet architecture as described by [this paper](https://arxiv.org/pdf/1512.03385.pdf)
+- **ResNet**: A custon model with the ResNet architecture as described by [this paper](https://arxiv.org/pdf/1512.03385.pdf)
 ```
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
@@ -279,7 +279,7 @@ Non-trainable params: 23587712 (89.98 MB)
 _________________________________________________________________
 ```
 
-- Xception: A custon model with the Xception architecture from Google as described by [this paper](https://arxiv.org/pdf/1610.02357.pdf)
+- **Xception**: A custon model with the Xception architecture from Google as described by [this paper](https://arxiv.org/pdf/1610.02357.pdf)
 ```
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
