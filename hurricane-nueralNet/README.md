@@ -2,6 +2,8 @@
 
 This repository focuses on classifying satellite images from Texas after Hurricane Harvey into "damaged" and "non-damaged" buildings using TensorFlow nueral networks. We explored various neural network architectures, deploying the best-performing model with a Flask-based inference server. This README covers the deployment and usage of the model inference server.
 
+Note that in the `models/` directory, not all the models are there because some exceeded GitHub's 100 Mb file size limit. These files are still contained in the docker image however. 
+
 
 # TensorFlow Model Serving API
 
@@ -25,6 +27,7 @@ This API serves as an interface for classifying images using pre-trained TensorF
 ### Running with Docker
 
 The official Docker image for this inference server is `jthet/hurricane-prediction:latest`.
+This method is recommended because it contains all the models while this repo only contains alt_lenet, lenet5, and xception.
 
 Run:
 ```
@@ -34,6 +37,7 @@ $ docker run -p 5000:5000 jthet/hurricane-prediction:latest
 See "Making Requests to the Inference Server"
 
 ### Running with Docker-compose
+First pull this repository. Note that only the alt_lenet, lenet5, and xception models are available if not using the docker image.
 #### Starting the Inference Server with Docker-compose
 
 To start the inference server with Docker Compose, follow these steps:
