@@ -22,7 +22,19 @@ This API serves as an interface for classifying images using pre-trained TensorF
 | `/model/summary`    | GET    | Provides a textual summary of the currently loaded TensorFlow model's architecture.                |
 | `/help`             | GET    | Provides an overview and usage examples for the available API endpoints.                           |
 
-### Starting the Inference Server
+### Running with Docker
+
+The official Docker image for this inference server is `jthet/hurricane-prediction:latest`.
+
+Run:
+```
+$ docker pull jthet/hurricane-prediction:latest
+$ docker run -p 5000:5000 jthet/hurricane-prediction:latest
+```
+See "Making Requests to the Inference Server"
+
+### Running with Docker-compose
+#### Starting the Inference Server with Docker-compose
 
 To start the inference server with Docker Compose, follow these steps:
 
@@ -36,6 +48,70 @@ To start the inference server with Docker Compose, follow these steps:
 This command builds the Docker image (if it hasn't been built) or rebuilds it if the Dockerfile has changed since the last build. Then, it starts the container defined in your docker-compose.yml file.
 
 The server will start, and you can access it at http://localhost:5000 (http://127.0.0.1:5000). If port 5000 is in use locally, change `ports:` to 5001:5000 and just use port 5001.
+
+
+#### Stopping the Inference Server
+
+To stop the inference server and remove the containers, use the following command in the same directory as your docker-compose.yml file:
+
+```
+docker-compose down
+```
+
+### Making Requests to the Inference Server
+
+#### Requesting Model Information
+To retrieve information about the currently loaded model, you can make a GET request to the /model/info endpoint:
+
+```
+$ curl http://localhost:5000/model/info
+{
+  "description": "Classify images of houses as damaged or not using the alt_lenet tensorflow model.",
+  "name": "alt_lenet",
+  "non-trainable parameters:": "0",
+  "total parameters:": "2601153",
+  "trainable parameters:": "2601153",
+  "version": "v1"
+}
+```
+This request will return JSON data containing details such as the model's version, name, description, and parameter counts.
+
+#### Classifying an Image
+To classify an image using the inference server, send a POST request to the /model/predict endpoint with the image you want to classify. Here's an example using curl:
+
+```
+curl -X POST -F "image=@path/to/your/image.jpg" http://localhost:5000/model/predict
+```
+for example:
+```
+$ curl -X POST -F "image=@./data/no_damage/-95.086_29.827665000000003.jpeg" http://localhost:5000/model/predict
+{
+  "Outcome": "The model is confident that the building that is not damaged.",
+  "result": [
+    [
+      1.5120656726708148e-08
+    ]
+  ]
+}
+```
+
+#### Changing the Model
+If the server supports changing the inference model, you can do so by sending a POST request to the /model/change endpoint with the name of the model you wish to use:
+```
+curl -X POST -H "Content-Type: application/json" -d '{"model_name": "new_model_name"}' http://localhost:5000/model/change
+```
+for example:
+```
+curl -X POST -H "Content-Type: application/json" -d '{"model_name": "xception"}' http://localhost:5000/model/change
+
+{
+  "message": "Model changed to xception successfully",
+  "model_path": "models/xception.keras"
+}
+```
+Similar curl calls can also be done for all the other API endpoints.
+
+**See the file `inference_example.ipynb` for examples of use for each API endpoint in depth**
 
 ## Model Training
 ### Data:
@@ -232,23 +308,3 @@ _________________________________________________________________
 Models were evaluated based on their accuracy score on the validation set. 
 
 The `alt_lenet` model was the best model.
-
-
-# TensorFlow Model Serving API
-
-## Overview
-
-This API serves as an interface for classifying images using pre-trained TensorFlow models. It allows users to classify images as "damaged" or "not damaged", change the underlying model, and retrieve information about the current model.
-
-## Use
-
-### API Endpoints
-
-| Endpoint            | Method | Description                                                                                         |
-|---------------------|--------|-----------------------------------------------------------------------------------------------------|
-| `/model/info`       | GET    | Provides basic information about the currently loaded TensorFlow model, including its parameters.   |
-| `/model/models`     | GET    | Lists the available TensorFlow models that users can switch to, indicating the default model.      |
-| `/model/predict`    | POST   | Classifies an image uploaded by the user as either "damaged" or "not damaged".                     |
-| `/model/change`     | POST   | Changes the TensorFlow model used by the server to a specified model.                              |
-| `/model/summary`    | GET    | Provides a textual summary of the currently loaded TensorFlow model's architecture.                |
-| `/help`             | GET    | Provides an overview and usage examples for the available API endpoints.                           |
