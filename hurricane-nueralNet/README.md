@@ -24,10 +24,10 @@ This API serves as an interface for classifying images using pre-trained TensorF
 | `/model/summary`    | GET    | Provides a textual summary of the currently loaded TensorFlow model's architecture.                |
 | `/help`             | GET    | Provides an overview and usage examples for the available API endpoints.                           |
 
-### Running with Docker
+### Running with Docker (Recommended)
 
 The official Docker image for this inference server is `jthet/hurricane-prediction:latest`.
-This method is recommended because it contains all the models while this repo only contains alt_lenet, lenet5, and xception.
+This method is recommended because the docker image contains all the models while this repo only contains alt_lenet, lenet5, and xception. Therefore, `docker compose` does not support use of the resnet, vgg, or ann models through the inference server.
 
 Run:
 ```
@@ -37,7 +37,7 @@ $ docker run -p 5000:5000 jthet/hurricane-prediction:latest
 See "Making Requests to the Inference Server"
 
 ### Running with Docker-compose
-First pull this repository. Note that only the alt_lenet, lenet5, and xception models are available if not using the docker image.
+First pull this repository. Note that only the alt_lenet, lenet5, and xception models are available if not using the docker image. `docker compose` does not support use of the resnet, vgg, or ann models through the inference server.
 #### Starting the Inference Server with Docker-compose
 
 To start the inference server with Docker Compose, follow these steps:
