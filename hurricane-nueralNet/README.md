@@ -1,4 +1,4 @@
-# Hurrican Damage Prediction with Nueral Networks
+# Hurricane Damage Prediction with Neural Networks
 
 This repository focuses on classifying satellite images from Texas after Hurricane Harvey into "damaged" and "non-damaged" buildings using TensorFlow nueral networks. We explored various neural network architectures, deploying the best-performing model with a Flask-based inference server. This README covers the deployment and usage of the model inference server.
 
