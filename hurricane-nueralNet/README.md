@@ -1,6 +1,6 @@
-# Hurrican Damage Prediction with Nueral Networks
+# Hurrican Damage Prediction with Neural Networks
 
-This repository focuses on classifying satellite images from Texas after Hurricane Harvey into "damaged" and "non-damaged" buildings using TensorFlow nueral networks. We explored various neural network architectures, deploying the best-performing model with a Flask-based inference server. This README covers the deployment and usage of the model inference server.
+This repository focuses on classifying satellite images from Texas after Hurricane Harvey into "damaged" and "non-damaged" buildings using TensorFlow neural networks. We explored various neural network architectures, deploying the best-performing model with a Flask-based inference server. This README covers the deployment and usage of the model inference server.
 
 Note that in the `models/` directory, not all the models are there because some exceeded GitHub's 100 Mb file size limit. These files are still contained in the docker image however. 
 
@@ -122,7 +122,7 @@ Similar curl calls can also be done for all the other API endpoints.
 
 ## Model Training
 ### Data:
-The data that was used for this project can be found in the `/data` directory of this repository. It contains 21322 (128px, 128px) RGB images. Each image was classified as "damage" or "no_damage". The RGB values were normalized to the range [0, 1] for model training. After that, the data was split for testing and training and several different nueral network architectures were used.
+The data that was used for this project can be found in the `/data` directory of this repository. It contains 21322 (128px, 128px) RGB images. Each image was classified as "damage" or "no_damage". The RGB values were normalized to the range [0, 1] for model training. After that, the data was split for testing and training and several different neural network architectures were used.
 
 ### Architectures:
 
