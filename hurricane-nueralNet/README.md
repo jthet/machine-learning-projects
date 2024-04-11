@@ -24,6 +24,9 @@ This API serves as an interface for classifying images using pre-trained TensorF
 | `/model/summary`    | GET    | Provides a textual summary of the currently loaded TensorFlow model's architecture.                |
 | `/help`             | GET    | Provides an overview and usage examples for the available API endpoints.                           |
 
+*Note: prediction through the input server only supports 1 image per request*
+
+
 ### Running with Docker (Recommended)
 
 The official Docker image for this inference server is `jthet/hurricane-prediction:latest`.
