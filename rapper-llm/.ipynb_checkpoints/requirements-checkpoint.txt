@@ -1,7 +1,0 @@
-tensorflow==2.15
-Flask==3.0
-numpy==1.26
-pillow
-requests
-bs4
-notebook
