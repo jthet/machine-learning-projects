@@ -27,7 +27,7 @@ def model_info():
     GET: Returns a JSON object with the model's version, name, description,
     total number of parameters, number of trainable parameters, and number of non-trainable parameters.
 
-    Example: curl http://127.0.0.1:5001/model/info
+    Example: curl http://127.0.0.1:5000/model/info
     """
     global model
     return {
@@ -47,7 +47,7 @@ def list_available_models():
     
     GET: Returns a JSON object listing all available models and indicating the default model.
 
-    Example: curl http://127.0.0.1:5001/model/models
+    Example: curl http://127.0.0.1:5000/model/models
     """
     available_models = ["vgg16", "inception", "lenet5"]
     return jsonify({
@@ -73,6 +73,7 @@ def preprocess_input(image):
     # Add a batch dimension
     return image_array
 
+@app.route('/model/predict', methods=['POST'])
 def predict():
     """
     Predicts the breed of a dog given an image uploaded by the user.
@@ -80,19 +81,16 @@ def predict():
     POST: Expects a multipart/form-data request with an image file under the key "image".
     Returns a JSON object with the classification result.
     
-    Example:curl -X POST -F "image=@./data/images/affenpinscher-1.jpg" http://localhost:5001/model/predict
+    Example:curl -X POST -F "image=@./data/images/affenpinscher-1.jpg" http://localhost:5000/model/predict
     """
     if 'image' not in request.files:
         return jsonify({"error": "The `image` field is required"}), 404
     file = request.files['image']
     if file:
         try:
-            # Open the image file and prepare it for the model
             img = Image.open(file.stream).convert('RGB')
-            img = img.resize((128, 128))  # Adjust size according to your model requirements
-            img_array = image.img_to_array(img)
-            img_array = np.expand_dims(img_array, axis=0)
-            img_array = preprocess_input(img_array)  # Ensure this matches model's expected preprocessing
+            img = img.resize((128, 128)) 
+            img_array = preprocess_input(img)
 
             # Make prediction
             prediction = model.predict(img_array)
@@ -113,7 +111,7 @@ def change_model():
     POST: Expects a JSON object with a key "model_name" that specifies the name of the new model to load.
     Returns a JSON object with a message indicating successful model change and the path to the new model.
 
-    Example: curl -X POST -H "Content-Type: application/json" -d '{"model_name": "lenet5"}' http://127.0.0.1:5001/changeModel
+    Example: curl -X POST -H "Content-Type: application/json" -d '{"model_name": "lenet5"}' http://127.0.0.1:5000/changeModel
     """
     global model, model_name, model_path
     available_models = ["vgg", "lenet5", "inception"]
@@ -162,7 +160,7 @@ def model_summary():
     
     GET: Returns a JSON array where each element is a string describing a layer in the model's architecture.
 
-    Example: curl http://127.0.0.1:5001/model/summary
+    Example: curl http://127.0.0.1:5000/model/summary
     """
     model_summary = model_summary_to_json(model)
     return jsonify(model_summary)
@@ -177,27 +175,27 @@ def api_help():
         "/model/info": {
             "method": "GET",
             "description": "Provides basic information about the currently loaded TensorFlow model.",
-            "example": "curl http://127.0.0.1:5001/model/info"
+            "example": "curl http://127.0.0.1:5000/model/info"
         },
         "/model/predict": {
             "method": "POST",
             "description": "Predicts the breed of a dog given an image uploaded by the user.",
-            "example": "curl -X POST -F 'image=@./data/images/affenpinscher-1.jpg' http://localhost:5001/model/predict"
+            "example": "curl -X POST -F 'image=@./data/images/affenpinscher-1.jpg' http://localhost:5000/model/predict"
         },
         "/model/change": {
             "method": "POST",
             "description": "Changes the TensorFlow model used by the server.",
-            "example": "curl -X POST -H 'Content-Type: application/json' -d '{\"model_name\": \"vgg\"}' http://127.0.0.1:5001/model/change"
+            "example": "curl -X POST -H 'Content-Type: application/json' -d '{\"model_name\": \"vgg\"}' http://127.0.0.1:5000/model/change"
         },
         "/model/summary": {
             "method": "GET",
             "description": "Provides a textual summary of the currently loaded TensorFlow model's architecture.",
-            "example": "curl http://127.0.0.1:5001/model/summary"
+            "example": "curl http://127.0.0.1:5000/model/summary"
         },
         "/model/models": {
             "method": "GET",
             "description": "Lists the available TensorFlow models that users can switch to.",
-            "example": "curl http://127.0.0.1:5001/model/models"
+            "example": "curl http://127.0.0.1:5000/model/models"
         }
     }
     return jsonify(help_info)

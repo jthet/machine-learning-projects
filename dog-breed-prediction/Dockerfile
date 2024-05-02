@@ -7,7 +7,7 @@ RUN pip install tensorflow==2.15
 RUN pip install Flask==3.0
 RUN pip install numpy==1.26
 RUN pip install pillow
-RUN pip install scikit-learn
+RUN pip install scikit-learn==1.3.2
 
 
 WORKDIR /home
