@@ -9,7 +9,7 @@ This model can predict 120 different dog breeds, as feature in the [Stanford dog
 Note that in the `models/` directory, the VGG16 model is not there because it exceeded GitHub's 100 Mb file size limit. This file is in the docker image.
 
 
-## Example Usage
+## Example Output
 
 For this picture (of myself), my model said I was a miniature poodle:
 ```
@@ -18,13 +18,40 @@ $ curl -X POST -F 'image=@./assets/jt-2-34.JPG' http://localhost:5000/model/pred
   "result": "miniature poodle"
 }
 ```
-[<img src="assets/jt-2-34.JPG" width=128>]([https://link-to-your-URL/](https://github.com/jthet/machine-learning-projects/blob/main/dog-breed-prediction/assets/jt-2-34.JPG))
-[<img src="data/images/jt-2-34.JPG" width=128>]([https://link-to-your-URL/](https://github.com/jthet/machine-learning-projects/blob/main/dog-breed-prediction/assets/jt-2-34.JPG))
+<img src="assets/jt-2-34.JPG" width=128> <img src="data/images/miniature poodle-57.jpg" height=193>
+
+For some celebrities we have the following:
+
+```
+$ curl -X POST -F 'image=@./assets/bradPitt.jpg' http://localhost:5000/model/predict
+{
+  "result": "Brittany spaniel"
+}
+```
+
+<img src="assets/bradPitt.jpg" width=256> <img src="data/images/Brittany spaniel-140.jpg" height=193>
 
 
+```
+$ curl -X POST -F 'image=@./assets/leoDicaprio.jpg' http://localhost:5000/model/predict
+{
+  "result": "Gordon setter"
+}
+```
+
+<img src="assets/leoDicaprio.jpg" width=256> <img src="data/images/Gordon setter-143.jpg" height=193>
 
 
+And lastly, one that I think the model got wrong:
 
+```
+$ curl -X POST -F 'image=@./assets/margotRobbie.jpg' http://localhost:5000/model/predict
+{
+  "result": "bull mastiff"
+}
+```
+
+<img src="assets/margotRobbie.jpg" width=256> <img src="data/images/bull mastiff-27.jpg" height=193>
 
 # TensorFlow Model Serving API
 
