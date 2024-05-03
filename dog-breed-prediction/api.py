@@ -185,8 +185,7 @@ def api_help():
         "/model/change": {
             "method": "POST",
             "description": "Changes the TensorFlow model used by the server.",
-            "example": "curl -X POST -H 'Content-Type: application/json' -d '{\"model_name": "inception"}' http://127.0.0.1:5000/model/cha
-nge"
+            "example": "curl -X POST -H 'Content-Type: application/json' -d '{\"model_name\": \"inception\"}' http://127.0.0.1:5001/model/change"
         },
         "/model/summary": {
             "method": "GET",
