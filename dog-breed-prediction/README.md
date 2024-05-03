@@ -82,7 +82,7 @@ This method is recommended because the docker image contains all the models whil
 
 Run:
 ```
-$ docker pull jthet/dog-breed-predictionn:latest
+$ docker pull jthet/dog-breed-prediction:latest
 $ docker run -p 5000:5000 jthet/dog-breed-prediction:latest
 ```
 
