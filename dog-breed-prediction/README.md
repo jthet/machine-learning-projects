@@ -6,8 +6,25 @@ This repository focuses on predicting the breed of a dog (or the potential breed
 
 This model can predict 120 different dog breeds, as feature in the [Stanford dogs dataset](http://vision.stanford.edu/aditya86/ImageNetDogs/).
 
-
 Note that in the `models/` directory, the VGG16 model is not there because it exceeded GitHub's 100 Mb file size limit. This file is in the docker image.
+
+
+## Example Usage
+
+For this picture (of myself), my model said I was a miniature poodle:
+```
+$ curl -X POST -F 'image=@./assets/jt-2-34.JPG' http://localhost:5000/model/predict
+{
+  "result": "miniature poodle"
+}
+```
+[<img src="assets/jt-2-34.JPG" width=128>]([https://link-to-your-URL/](https://github.com/jthet/machine-learning-projects/blob/main/dog-breed-prediction/assets/jt-2-34.JPG))
+[<img src="data/images/jt-2-34.JPG" width=128>]([https://link-to-your-URL/](https://github.com/jthet/machine-learning-projects/blob/main/dog-breed-prediction/assets/jt-2-34.JPG))
+
+
+
+
+
 
 # TensorFlow Model Serving API
 
