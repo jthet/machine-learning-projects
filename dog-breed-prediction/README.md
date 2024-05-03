@@ -1,6 +1,6 @@
 # Dog Breed Prediction 
 
-Have you ever wanted to know what dog breed you would be? Well now you can know! Simply follow the instructions below. 
+Have you ever thought about what kind of dog you would be? Well now you can know! Simply follow the instructions below. 
 
 This repository focuses on predicting the breed of a dog (or the potential breed of a human) from pictures of dogs (or humans) using TensorFlow neural networks. We explored various neural network architectures, deploying the best-performing model with a Flask-based inference server. This README covers the deployment and usage of the model inference server.
 
